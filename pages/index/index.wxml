@@ -1,0 +1,12 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="container-name">
+    <label class="container-name-label">访谈人:</label>
+    <input class="container-name-input" bindblur="getInterviewer"></input>
+  </view>
+  <view class="container-name">
+    <label class="container-name-label">被访谈人:</label>
+    <input class="container-name-input" bindblur="getInterview"></input>
+  </view>
+  <button class="container-button" type="primary" bindtap="gotoInterview">确认</button>
+</view>

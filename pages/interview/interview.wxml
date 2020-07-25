@@ -1,0 +1,38 @@
+<!--pages/interview/interview.wxml-->
+<view class="interview">
+	<view class="interview-title">镇江分行“五谈五访沟通记录表”</view>
+	<view class="interview-table">
+		<view class="interview-table-title">
+			<view class="interview-table-title-item">
+        <view>单位：</view>
+				<picker class="picker" mode="multiSelector" value="{{index}}" range="{{list}}">
+          <view>{{list[1].UP_NAME}}</view>
+				</picker>
+			</view>
+			<view class="interview-table-title-item">访谈人：<view>{{interviewer}}</view>
+			</view>
+			<view class="interview-table-title-item">谈话日期：<picker class="picker" mode="date" value="{{date}}" bindchange="changeDate">{{date}}</picker>
+			</view>
+		</view>
+		<view class="interview-table-body">
+			<view class="interview-table-body-top">
+				<view class="interview-table-body-top-item">
+					<view class="item-left-title">被访谈人</view>
+					<view class="item-left-input">{{interview}}</view>
+				</view>
+				<view class="interview-table-body-top-item">
+					<view class="item-right-title">岗位</view>
+					<input class="item-right-input" bindblur="getJobs"></input>
+				</view>
+			</view>
+			<view class="interview-table-body-title">交流主要内容</view>
+			<view class="interview-table-body-content">
+				<textarea class="content-area" maxlength="-1" bindblur="getContent"></textarea>、
+				<view class="translate" touchstart="start">
+					<image class="translate-img" src="../../image/voice.png" bindlongpress="start"></image>
+				</view>
+			</view>
+		</view>
+	</view>
+	<button type="primary" bindtap="commit">提交</button>
+</view>

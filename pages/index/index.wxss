@@ -1,0 +1,17 @@
+.container-name{
+  display: flex;
+  margin-top: 100rpx;
+}
+.container-name-label{
+  width: 140rpx;
+  text-align: right;
+}
+.container-name-input{
+  border-bottom: 1rpx solid black;
+  margin-left: 20rpx;
+  padding-left: 10rpx;
+}
+.container-button{
+  position: fixed;
+  bottom: 300rpx;
+}
