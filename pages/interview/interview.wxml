@@ -1,6 +1,6 @@
 <!--pages/interview/interview.wxml-->
 <view class="interview">
-	<view class="interview-title">镇江分行“五谈五访沟通记录表”</view>
+	<view class="interview-title">镇江分行“五谈五访”沟通记录表</view>
 	<view class="interview-table">
 		<view class="interview-table-title">
 			<view class="interview-table-title-item">
@@ -29,7 +29,7 @@
 			<view class="interview-table-body-content">
 				<textarea class="content-area" maxlength="-1" bindblur="getContent"></textarea>、
 				<view class="translate" touchstart="start">
-					<image class="translate-img" src="../../image/voice.png" bindlongpress="start"></image>
+					<image class="translate-img" src="../../image/voice.png" bindtouchstart="start" bindtouchend="stop"></image>
 				</view>
 			</view>
 		</view>

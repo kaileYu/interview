@@ -1,0 +1,7 @@
+<!--pages/seccess/seccess.wxml-->
+<view class="seccess">
+  <view class="seccess-image">
+    <image class="seccess-image-img" src="../../image/seccess.png" mode="aspectFill"></image>
+  </view>
+  <view class="seccess-text">提交成功</view>
+</view>

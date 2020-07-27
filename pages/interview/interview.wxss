@@ -91,3 +91,6 @@
 button{
   margin-bottom: 60rpx;
 }
+.text{
+  font-size: 10px
+}

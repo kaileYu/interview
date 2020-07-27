@@ -5,15 +5,23 @@
 	},
 	"setting": {
 		"urlCheck": true,
+		"scopeDataCheck": false,
+		"coverView": true,
 		"es6": true,
 		"postcss": true,
+		"compileHotReLoad": false,
 		"preloadBackgroundData": false,
 		"minified": true,
-		"newFeature": true,
 		"autoAudits": false,
-		"coverView": true,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false
+		"newFeature": true,
+		"uglifyFileName": false,
+		"uploadWithSourceMap": true,
+		"useIsolateContext": true,
+		"nodeModules": false,
+		"enhance": false,
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false,
+		"showShadowRootInWxmlPanel": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.0",
@@ -47,12 +55,19 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 1,
 			"list": [
 				{
 					"id": -1,
 					"name": "interview",
 					"pathName": "pages/interview/interview",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/seccess/seccess",
+					"pathName": "pages/seccess/seccess",
 					"scene": null
 				}
 			]
