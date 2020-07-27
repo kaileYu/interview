@@ -94,3 +94,6 @@ button{
 .text{
   font-size: 10px
 }
+.name{
+  width: 100%;
+}

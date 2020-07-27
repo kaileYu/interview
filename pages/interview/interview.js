@@ -1,6 +1,5 @@
 // pages/interview/interview.js
 import util from '../../utils/util'
-let recordRecoManager = wx.getRecorderManager()
 let plugin = requirePlugin("WechatSI")
 let manager = plugin.getRecordRecognitionManager()
 var that
@@ -18,7 +17,6 @@ Page({
     content: '', //内容
     value: [0, 0],
     list: [{
-      id: 1,
       UP_NAME: '镇江大港支行',
       childList: [{
         BR_NAME: '镇江赵声路支行'
@@ -40,7 +38,6 @@ Page({
         BR_NAME: '镇江大港支行中小企业业务中心'
       }]
     }, {
-      id: 2,
       UP_NAME: '镇江丹徒支行',
       childList: [{
         BR_NAME: '中国银行镇江宜城支行'
@@ -52,7 +49,6 @@ Page({
         BR_NAME: '镇江辛丰支行'
       }]
     }, {
-      id: 3,
       UP_NAME: '镇江丹阳支行',
       childList: [{
         BR_NAME: '镇江丹阳吕城支行'
@@ -64,7 +60,7 @@ Page({
         BR_NAME: '镇江丹阳西环支行'
       }, {
         BR_NAME: '镇江丹阳府前支行'
-      }, , {
+      }, {
         BR_NAME: '镇江丹阳后巷支行'
       }, {
         BR_NAME: '镇江丹阳云阳支行'
@@ -106,7 +102,6 @@ Page({
         BR_NAME: '镇江丹阳支行业务管理部'
       }]
     }, {
-      id: 4,
       UP_NAME: '镇江丁卯桥支行',
       childList: [{
         BR_NAME: '镇江六普支行'
@@ -134,7 +129,6 @@ Page({
         BR_NAME: '镇江丁卯支行中小企业业务中心'
       }]
     }, {
-      id: 5,
       UP_NAME: '镇江分行本部',
       childList: [{
         BR_NAME: '镇江分行国际结算部'
@@ -190,13 +184,11 @@ Page({
         BR_NAME: '镇江分行法律与合规部'
       }]
     }, {
-      id: 6,
       UP_NAME: '镇江分行营业部汇总',
       childList: [{
         BR_NAME: '镇江分行营业部'
       }]
     }, {
-      id: 7,
       UP_NAME: '镇江京口支行',
       childList: [{
         BR_NAME: '镇江青年广场支行'
@@ -234,7 +226,6 @@ Page({
         BR_NAME: '镇江东门支行'
       }]
     }, {
-      id: 8,
       UP_NAME: '镇江句容支行',
       childList: [{
         BR_NAME: '镇江句容东门支行'
@@ -258,13 +249,12 @@ Page({
         BR_NAME: '镇江句容支行中小企业业务中心'
       }, {
         BR_NAME: '镇江句容华阳南路支行'
-      }, , {
+      }, {
         BR_NAME: '镇江句容文昌东路支行'
       }, {
         BR_NAME: '镇江句容支行金库'
       }]
     }, {
-      id: 9,
       UP_NAME: '镇江润州支行',
       childList: [{
         BR_NAME: '镇江润州支行综合管理部'
@@ -294,23 +284,8 @@ Page({
         BR_NAME: '镇江三茅宫支行'
       }, {
         BR_NAME: '镇江中银支行'
-      }, {
-        BR_NAME: ''
-      }, {
-        BR_NAME: ''
-      }, {
-        BR_NAME: ''
-      }, {
-        BR_NAME: ''
-      }, {
-        BR_NAME: ''
-      }, {
-        BR_NAME: ''
-      }, {
-        BR_NAME: ''
       }]
     }, {
-      id: 10,
       UP_NAME: '镇江扬中支行',
       childList: [{
         BR_NAME: '镇江扬中支行其他'
@@ -342,44 +317,70 @@ Page({
         BR_NAME: '镇江扬中城北支行'
       }]
     }],
-    timeout: null,
+    array: [
+      ['镇江大港支行', '镇江丹徒支行', '镇江丹阳支行', '镇江丁卯桥支行', '镇江分行本部', '镇江分行营业部汇总', '镇江京口支行', '镇江句容支行', '镇江润州支行', '镇江扬中支行'],
+      ['镇江赵声路支行', '镇江大港支行综合管理部', '镇江大港支行行长室', '镇江平昌新城支行', '镇江大港支行其他', '镇江大港支行业务发展部', '镇江大港支行营业部', '中国银行镇江大港支行个人金融部', '镇江大港支行中小企业业务中心']
+    ],
+    recordFlag: true
+  },
+  change(e) {
+    this.setData({
+      value: e.detail.value
+    })
+    this.setData({
+      enterprise: this.data.array[0][e.detail.value[0]] + "," + this.data.array[1][e.detail.value[0]]
+    })
+  },
+  columnChange(e) {
+    let index = e.detail.value
+    let column = e.detail.column
+    if (column == 0) {
+      let date = this.data.list[index].childList
+      let arr = []
+      date.map(item => {
+        arr.push(item.BR_NAME)
+      })
+      let array = this.data.array
+      array[1] = arr
+      this.setData({
+        array
+      })
+    }
   },
   initRecord() {
     let that = this;
     // 有新的识别内容返回，则会调用此事件
     manager.onRecognize = function (res) {
-      console.log(res.result);
-      // 标志位
-      that.lock = false;
-      let text = res.result;
-      that.setData({
-        recordText: text,
-        isLoading: false
-      })
+      console.log(res)
     }
-    // 识别结束事件
+    // 正常开始录音识别时会调用此事件
+    manager.onStart = function (res) {
+      console.log("成功开始录音识别", res)
+    }
+    // 识别错误事件
+    manager.onError = function (res) {
+      console.error("error msg", res)
+    }
+    //识别结束事件
     manager.onStop = function (res) {
-      console.log(res.result)
-      // 标志位
-      that.lock = false;
-      wx.vibrateShort({
-        success: () => {},
-        fail: () => {},
-        complete: () => {},
-      })
-      let text = res.result;
-      that.setData({
-        recordText: text,
-        isLoading: false
-      })
-      // 如果用户没有说话就提示一下
-      if (res.result === "") {
-        wx.showToast({
-          title: '您没有说话',
-          icon: 'none'
-        });
+      console.log('..............结束录音')
+      console.log('录音临时文件地址 -->' + res.tempFilePath);
+      console.log('录音总时长 -->' + res.duration + 'ms');
+      console.log('文件大小 --> ' + res.fileSize + 'B');
+      console.log('语音内容 --> ' + res.result);
+      if (res.result == '') {
+        wx.showModal({
+          title: '提示',
+          content: '听不清楚，请重新说一遍！',
+          showCancel: false,
+          success: function (res) {}
+        })
         return;
       }
+      var text = that.data.content + res.result;
+      that.setData({
+        content: text
+      })
     }
   },
   getEnterprise(e) {
@@ -406,23 +407,23 @@ Page({
     wx.getSetting({ //检查用户是否授权录音
       success: res => {
         if (res.authSetting["scope.record"]) { //用户授权，开始录音
-          console.log("开始录音", recordRecoManager)
-          recordRecoManager.start({
-            audioSource: 'auto'
+          console.log("开始录音")
+          this.setData({
+            recordFlag: false
           })
           manager.start({
-            lang: 'zh-CN'
+            lang: 'zh_CN'
           })
         } else {
           wx.authorize({
             scope: 'scope.record',
             success: res => {
-              console.log("开始录音", recordRecoManager)
-              recordRecoManager.start({
-                audioSource: 'auto'
+              console.log("开始录音")
+              this.setData({
+                recordFlag: false
               })
               manager.start({
-                lang: 'zh-CN'
+                lang: 'zh_CN'
               })
             },
             fail: () => {
@@ -438,15 +439,10 @@ Page({
   },
   stop() { //停止录音
     console.log("停止录音")
-    that = this
-    recordRecoManager.stop()
+    this.setData({
+      recordFlag: true
+    })
     manager.stop()
-    manager.onRecognize = (res) => {
-      console.log(res.result, "sss")
-    }
-    manager.onStop = (res) => {
-      console.log(res, "res")
-    }
   },
   commit() {
     if (this.data.interviewer && this.data.interview && this.data.date && this.enterprise && this.data.jobs && this.data.content) {

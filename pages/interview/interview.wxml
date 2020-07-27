@@ -5,8 +5,8 @@
 		<view class="interview-table-title">
 			<view class="interview-table-title-item">
         <view>单位：</view>
-				<picker class="picker" mode="multiSelector" value="{{index}}" range="{{list}}">
-          <view>{{list[1].UP_NAME}}</view>
+				<picker class="picker" mode="multiSelector" value="{{value}}" range="{{array}}" bindchange="change" bindcolumnchange="columnChange">
+          <view class="name">{{array[0][value[0]]}},{{array[1][value[1]]}}</view>
 				</picker>
 			</view>
 			<view class="interview-table-title-item">访谈人：<view>{{interviewer}}</view>
@@ -27,9 +27,9 @@
 			</view>
 			<view class="interview-table-body-title">交流主要内容</view>
 			<view class="interview-table-body-content">
-				<textarea class="content-area" maxlength="-1" bindblur="getContent"></textarea>、
+				<textarea class="content-area" maxlength="-1" bindblur="getContent" value="{{content}}"></textarea>、
 				<view class="translate" touchstart="start">
-					<image class="translate-img" src="../../image/voice.png" bindtouchstart="start" bindtouchend="stop"></image>
+					<image class="translate-img" src="{{recordFlag? '../../image/voice.png' : '../../image/voice-active.png' }}" bindtouchstart="start" bindtouchend="stop"></image>
 				</view>
 			</view>
 		</view>

@@ -55,7 +55,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": -1,
 			"list": [
 				{
 					"id": -1,
@@ -68,6 +68,14 @@
 					"id": -1,
 					"name": "pages/seccess/seccess",
 					"pathName": "pages/seccess/seccess",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/",
+					"pathName": "pages/speak/speak",
+					"query": "",
 					"scene": null
 				}
 			]
