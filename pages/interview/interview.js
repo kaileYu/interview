@@ -2,7 +2,6 @@
 import util from '../../utils/util'
 let plugin = requirePlugin("WechatSI")
 let manager = plugin.getRecordRecognitionManager()
-var that
 Page({
 
   /**
