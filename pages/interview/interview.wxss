@@ -1,6 +1,7 @@
 /* pages/interview/interview.wxss */
 .interview{
   width: 100%;
+  font-size: 11px;
 }
 .interview-title{
   margin: 40rpx 0;
@@ -9,11 +10,12 @@
 }
 .interview-table-title{
   width: 100%;
+  font-size: 14px;
 }
 .interview-table-title-item{
   display: flex;
   width: 90%;
-  margin: 10rpx auto;
+  margin: 10px auto;
 }
 .interview-table-title-item-input{
   border-bottom: 1rpx solid black;
@@ -29,46 +31,53 @@
 }
 .interview-table-body-top{
   display: flex;
+  border-bottom: 1rpx solid black;
 }
 .interview-table-body-top-item{
   display: flex;
-  flex: 1;
 }
 .item-left-title{
-  width: 180rpx;
+  width: 110rpx;
   height: 50rpx;
   line-height: 50rpx;
   border-right: 1rpx solid black;
-  border-bottom: 1rpx solid black;
+  /* border-bottom: 1rpx solid black; */
   text-align: center;
+  font-size: 11px;
 }
 .item-left-input{
   height: 50rpx;
-  width: 140rpx;
+  width: 135rpx;
   border-right: 1rpx solid black;
-  border-bottom: 1rpx solid black;
-  padding-left: 20rpx;
+  /* border-bottom: 1rpx solid black; */
+  padding-left: 5rpx;
   line-height: 50rpx;
+  font-size: 11px;
 }
-.item-right-title{
-  width: 100px;
+.item-right-title,.item-mid-title{
+  width: 80rpx;
   height: 50rpx;
   line-height: 50rpx;
-  border-bottom: 1rpx solid black;
   border-right: 1rpx solid black;
   text-align: center;
 }
-.item-right-input{
+.item-right-input, .item-mid-input{
   height: 50rpx;
   line-height: 50rpx;
-  border-bottom: 1rpx solid black;
   padding-left: 10rpx;
+}
+.item-right-input{
+  border-right: 1rpx solid black;
+}
+.item-mid-input{
+  width: 80rpx;  
 }
 .interview-table-body-title{
   text-align: center;
   height: 60rpx;
   line-height: 60rpx;
   font-size: 16px;
+  font-size: 14px;
 }
 .interview-table-body-content{
   width: 100%;

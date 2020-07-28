@@ -1,6 +1,6 @@
 <!--pages/interview/interview.wxml-->
 <view class="interview">
-	<view class="interview-title">镇江分行“五谈五访”沟通记录表</view>
+	<view class="interview-title">镇江分行“五访五谈”沟通记录表</view>
 	<view class="interview-table">
 		<view class="interview-table-title">
 			<view class="interview-table-title-item">
@@ -9,20 +9,25 @@
           <view class="name">{{array[0][value[0]]}},{{array[1][value[1]]}}</view>
 				</picker>
 			</view>
-			<view class="interview-table-title-item">访谈人：<view>{{interviewer}}</view>
+			<view class="interview-table-title-item">主谈人：<input class="interview-table-title-item-input" value="{{interviewer}}" bindblur="getInterviewer"></input>
 			</view>
 			<view class="interview-table-title-item">谈话日期：<picker class="picker" mode="date" value="{{date}}" bindchange="changeDate">{{date}}</picker>
 			</view>
+			<view class="interview-table-title-item">谈话地点：<input class="interview-table-title-item-input" value="{{place}}" bindblur="getPlace"></input></view>
 		</view>
 		<view class="interview-table-body">
-			<view class="interview-table-body-top">
+			<view class="interview-table-body-top" wx:for="{{3}}" wx:key="index" bindtap="getIndex" data-index="{{index}}">
 				<view class="interview-table-body-top-item">
-					<view class="item-left-title">被访谈人</view>
-					<view class="item-left-input">{{interview}}</view>
+					<view class="item-left-title">谈话对象</view>
+					<input class="item-left-input" placeholder="姓名(ehr号)" value="{{interview}}" bindblur="getInterview"></input>
 				</view>
 				<view class="interview-table-body-top-item">
 					<view class="item-right-title">岗位</view>
 					<input class="item-right-input" bindblur="getJobs"></input>
+				</view>
+				<view class="interview-table-body-top-item">
+					<view class="item-mid-title">人数</view>
+					<input class="item-mid-input" value="{{peopleNumber}}" bindblur="getPeopleNumber" type="number"></input>
 				</view>
 			</view>
 			<view class="interview-table-body-title">交流主要内容</view>

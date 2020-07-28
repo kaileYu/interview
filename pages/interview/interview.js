@@ -9,12 +9,14 @@ Page({
    */
   data: {
     interviewer: '', //谈话人
-    interview: '', //被谈话人
+    interviewees: [], //被谈话人数组
     date: '', // 日期
-    enterprise: '', //单位
-    jobs: '', //岗位
+    company: '', //单位
+    position: '', //岗位
     content: '', //内容
+    place: '', //地点
     value: [0, 0],
+    index: '', //当前点击的
     list: [{
       UP_NAME: '镇江大港支行',
       childList: [{
@@ -322,12 +324,17 @@ Page({
     ],
     recordFlag: true
   },
+  getPlace(e) {
+    this.setData({
+      place: e.detail.value
+    })
+  },
   change(e) {
     this.setData({
       value: e.detail.value
     })
     this.setData({
-      enterprise: this.data.array[0][e.detail.value[0]] + "," + this.data.array[1][e.detail.value[0]]
+      company: this.data.array[0][e.detail.value[0]] + "," + this.data.array[1][e.detail.value[0]]
     })
   },
   columnChange(e) {
@@ -384,13 +391,16 @@ Page({
   },
   getEnterprise(e) {
     this.setData({
-      enterprise: e.detail.value
+      company: e.detail.value
     })
   },
   getJobs(e) {
-    this.setData({
-      jobs: e.detail.value
-    })
+    if (this.data.interviewees[this.data.index]) {
+      this.data.interviewees[this.data.index]["position"] = e.detail.value
+    } else {
+      this.data.interviewees.push({})
+      this.data.interviewees[this.data.index]["position"] = e.detail.value
+    }
   },
   changeDate(e) {
     this.setData({
@@ -399,8 +409,34 @@ Page({
   },
   getContent(e) {
     this.setData({
-      content: e.detail.value
+      content: e.detail.value + this.data.content
     })
+  },
+  getInterviewer(e) {
+    this.setData({
+      interviewer: e.detail.value
+    })
+  },
+  getIndex(e) {
+    this.setData({
+      index: e.currentTarget.dataset.index
+    })
+  },
+  getInterview(e) {
+    if (this.data.interviewees[this.data.index]) {
+      this.data.interviewees[this.data.index]["interviewee"] = e.detail.value
+    } else {
+      this.data.interviewees.push({})
+      this.data.interviewees[this.data.index]["interviewee"] = e.detail.value
+    }
+  },
+  getPeopleNumber(e) {
+    if (this.data.interviewees[this.data.index]) {
+      this.data.interviewees[this.data.index]["peopleNumber"] = e.detail.value
+    } else {
+      this.data.interviewees.push({})
+      this.data.interviewees[this.data.index]["peopleNumber"] = e.detail.value
+    }
   },
   start() {
     wx.getSetting({ //检查用户是否授权录音
@@ -417,13 +453,7 @@ Page({
           wx.authorize({
             scope: 'scope.record',
             success: res => {
-              console.log("开始录音")
-              this.setData({
-                recordFlag: false
-              })
-              manager.start({
-                lang: 'zh_CN'
-              })
+
             },
             fail: () => {
               wx.showToast({
@@ -443,10 +473,85 @@ Page({
     })
     manager.stop()
   },
+  post() {
+    let data = {
+      company: this.data.company, //单位
+      content: this.data.content, //访谈内容
+      date: this.data.date, //日期 yyyy-MM-dd
+      interviewees: this.data.interviewees,
+      interviewer: this.data.interviewer, //主谈人
+      place: this.data.place //访谈地点
+    }
+    wx.request({
+      url: 'https://api.shouzhang.com/h5/zj-record/add',
+      method: "POST",
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      data: JSON.stringify(data),
+      success: res => {
+        console.log(res)
+        if (res.data.code == 0) {
+          wx.navigateTo({
+            url: '../seccess/seccess',
+          })
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
   commit() {
-    if (this.data.interviewer && this.data.interview && this.data.date && this.enterprise && this.data.jobs && this.data.content) {
-      console.log("提交")
+    if (this.data.interviewer && this.data.interviewees.length > 0 && this.data.date && this.data.company && this.data.place && this.data.content) {
+      if (this.data.interviewees.length >= 3) {
+        let flag
+        this.data.interviewees.map(item => {
+          if (item["peopleNumber"] && item["position"]) {
+            flag = true
+          }
+        })
+        if (flag) {
+          let inter = []
+          this.data.interviewees.map(item => {
+            inter.push({
+              '"ininterviewee"': item.interviewee,
+              '"position"': item.position,
+              '"peopleNumber"': item.peopleNumber
+            })
+          })
+          // this.setData({
+          //   interviewees: inter
+          // })
+          // console.log(this.data.interviewees)
+          this.post()
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: '请补全信息'
+          })
+        }
+      } else {
+        this.data.interviewees.map(item => {
+          let flag
+          if (item.peopleNumber && item.position && item.interviewee) {
+            flag = true
+          }
+          if (flag) {
+            this.post()
+          } else {
+            console.log(this.data, "2")
+            wx.showModal({
+              title: '提示',
+              content: '请补全信息'
+            })
+          }
+        })
+      }
     } else {
+      console.log(this.data, "3")
       wx.showModal({
         title: '提示',
         content: '请补全信息'
@@ -461,8 +566,7 @@ Page({
     let time = new Date()
     this.setData({
       date: util.formatDate(time),
-      interview: options.interview,
-      interviewer: options.interviewer
+      company: this.data.array[0][0] + "," + this.data.array[1][0]
     })
   },
 
