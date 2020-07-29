@@ -22,7 +22,7 @@
   padding-left: 10rpx;
 }
 .picker{
-  width: 400rpx;
+  width: 170rpx;
 }
 .interview-table-body{
   width: 90%;
@@ -47,7 +47,7 @@
 }
 .item-left-input{
   height: 50rpx;
-  width: 135rpx;
+  width: 180rpx;
   border-right: 1rpx solid black;
   /* border-bottom: 1rpx solid black; */
   padding-left: 5rpx;
@@ -55,7 +55,7 @@
   font-size: 11px;
 }
 .item-right-title,.item-mid-title{
-  width: 80rpx;
+  width: 60rpx;
   height: 50rpx;
   line-height: 50rpx;
   border-right: 1rpx solid black;
@@ -70,7 +70,7 @@
   border-right: 1rpx solid black;
 }
 .item-mid-input{
-  width: 80rpx;  
+  width: 40rpx;  
 }
 .interview-table-body-title{
   text-align: center;

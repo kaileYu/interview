@@ -16,6 +16,7 @@ Page({
     content: '', //内容
     place: '', //地点
     value: [0, 0],
+    time: '00:00',
     index: '', //当前点击的
     list: [{
       UP_NAME: '镇江大港支行',
@@ -334,7 +335,12 @@ Page({
       value: e.detail.value
     })
     this.setData({
-      company: this.data.array[0][e.detail.value[0]] + "," + this.data.array[1][e.detail.value[0]]
+      company: this.data.array[1][e.detail.value[0]]
+    })
+  },
+  changeTime(e){
+    this.setData({
+      time: e.detail.value
     })
   },
   columnChange(e) {
@@ -395,12 +401,18 @@ Page({
     })
   },
   getJobs(e) {
-    if (this.data.interviewees[this.data.index]) {
-      this.data.interviewees[this.data.index]["position"] = e.detail.value
+    let index = e.currentTarget.dataset.index
+    if (this.data.interviewees[index]) {
+      this.data.interviewees[index]["position"] = e.detail.value
     } else {
-      this.data.interviewees.push({})
-      this.data.interviewees[this.data.index]["position"] = e.detail.value
+      for(let i=0;i<=5-this.data.interviewees.length;i++){
+        this.data.interviewees.push({})
+        if(this.data.interviewees[index]){
+          this.data.interviewees[index]["position"] = e.detail.value
+        }
+      }
     }
+    console.log(this.data.interviewees)
   },
   changeDate(e) {
     this.setData({
@@ -408,8 +420,9 @@ Page({
     })
   },
   getContent(e) {
+    // let text = this.data.content + e.detail.value
     this.setData({
-      content: e.detail.value + this.data.content
+      content: e.detail.value
     })
   },
   getInterviewer(e) {
@@ -417,25 +430,30 @@ Page({
       interviewer: e.detail.value
     })
   },
-  getIndex(e) {
-    this.setData({
-      index: e.currentTarget.dataset.index
-    })
-  },
   getInterview(e) {
-    if (this.data.interviewees[this.data.index]) {
-      this.data.interviewees[this.data.index]["interviewee"] = e.detail.value
+    let index = e.currentTarget.dataset.index
+    if (this.data.interviewees[index]) {
+      this.data.interviewees[index]["interviewee"] = e.detail.value
     } else {
-      this.data.interviewees.push({})
-      this.data.interviewees[this.data.index]["interviewee"] = e.detail.value
+      for(let i=0;i<=5-this.data.interviewees.length;i++){
+        this.data.interviewees.push({})
+        if(this.data.interviewees[index]){
+          this.data.interviewees[index]["interviewee"] = e.detail.value
+        }
+      }
     }
   },
   getPeopleNumber(e) {
-    if (this.data.interviewees[this.data.index]) {
-      this.data.interviewees[this.data.index]["peopleNumber"] = e.detail.value
+    let index = e.currentTarget.dataset.index
+    if (this.data.interviewees[index]) {
+      this.data.interviewees[index]["peopleNumber"] = e.detail.value
     } else {
-      this.data.interviewees.push({})
-      this.data.interviewees[this.data.index]["peopleNumber"] = e.detail.value
+      for(let i=0;i<=5-this.data.interviewees.length;i++){
+        this.data.interviewees.push({})
+        if(this.data.interviewees[index]){
+          this.data.interviewees[index]["peopleNumber"] = e.detail.value
+        }
+      }
     }
   },
   start() {
@@ -566,7 +584,7 @@ Page({
     let time = new Date()
     this.setData({
       date: util.formatDate(time),
-      company: this.data.array[0][0] + "," + this.data.array[1][0]
+      company: this.data.array[1][0]
     })
   },
 
